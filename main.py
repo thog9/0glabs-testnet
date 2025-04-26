@@ -25,12 +25,12 @@ def _banner():
     banner = r"""
 
 
-░█████╗░░██████╗░░░░░░░██╗░░░░░░█████╗░██████╗░░██████╗  ████████╗███████╗░██████╗████████╗███╗░░██║███████╗████████╗
-██╔══██╗██╔════╝░░░░░░░██║░░░░░██╔══██╗██╔══██╗██╔════╝  ╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝████╗░██║██╔════╝╚══██╔══╝
-██║░░██║██║░░██╗░█████╗██║░░░░░███████║██████╦╝╚█████╗░  ░░░██║░░░█████╗░░╚█████╗░░░░██║░░░██╔██╗██║█████╗░░░░░██║░░░
-██║░░██║██║░░╚██╗╚════╝██║░░░░░██╔══██║██╔══██╗░╚═══██╗  ░░░██║░░░██╔══╝░░░╚═══██╗░░░██║░░░██║╚████║██╔══╝░░░░░██║░░░
-╚█████╔╝╚██████╔╝░░░░░░███████╗██║░░██║██████╦╝██████╔╝  ░░░██║░░░███████╗██████╔╝░░░██║░░░██║░╚███║███████╗░░░██║░░░
-░╚════╝░░╚═════╝░░░░░░░╚══════╝╚═╝░░╚═╝╚═════╝░╚═════╝░  ░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░╚═╝░░╚══╝╚══════╝░░░╚═╝░░░
+░█████╗░░██████╗░  ░██████╗░░█████╗░██╗░░░░░██╗██╗░░░░░███████╗░█████╗░  ██╗░░░██╗██████╗░
+██╔══██╗██╔════╝░  ██╔════╝░██╔══██╗██║░░░░░██║██║░░░░░██╔════╝██╔══██╗  ██║░░░██║╚════██╗
+██║░░██║██║░░██╗░  ██║░░██╗░███████║██║░░░░░██║██║░░░░░█████╗░░██║░░██║  ╚██╗░██╔╝░█████╔╝
+██║░░██║██║░░╚██╗  ██║░░╚██╗██╔══██║██║░░░░░██║██║░░░░░██╔══╝░░██║░░██║  ░╚████╔╝░░╚═══██╗
+╚█████╔╝╚██████╔╝  ╚██████╔╝██║░░██║███████╗██║███████╗███████╗╚█████╔╝  ░░╚██╔╝░░██████╔╝
+░╚════╝░░╚═════╝░  ░╚═════╝░╚═╝░░╚═╝╚══════╝╚═╝╚══════╝╚══════╝░╚════╝░  ░░░╚═╝░░░╚═════╝░
 
 
     """
@@ -47,6 +47,10 @@ def _clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 # Các hàm giả lập cho các lệnh mới
+async def run_faucettokens(language: str):
+    from scripts.faucettokens import run_faucettokens as faucettokens_run
+    await faucettokens_run(language)
+    
 async def run_swaptoken(language: str):
     from scripts.swaptoken import run_swaptoken as swaptoken_run
     await swaptoken_run(language)
@@ -83,6 +87,10 @@ async def run_sendtoken(language: str):
     from scripts.sendtoken import run_sendtoken as sendtoken_run
     await sendtoken_run(language)
 
+async def run_nftcollection(language: str):
+    from scripts.nftcollection import run_nftcollection as nftcollection_run
+    await nftcollection_run(language)
+
 async def cmd_exit(language: str):
     messages = {"vi": "Đang thoát...", "en": "Exiting..."}
     print_border(messages[language], Fore.GREEN)
@@ -90,6 +98,7 @@ async def cmd_exit(language: str):
 
 # Danh sách lệnh menu
 SCRIPT_MAP = {
+    "faucettokens": run_faucettokens,
     "swaptoken": run_swaptoken,
     "storagescan": run_storagescan,
     "conftnft": run_conftnft,
@@ -99,6 +108,7 @@ SCRIPT_MAP = {
     "sendtx": run_sendtx,
     "deploytoken": run_deploytoken,
     "sendtoken": run_sendtoken,
+    "nftcollection": run_nftcollection,
     "exit": cmd_exit
 }
 
@@ -106,27 +116,35 @@ SCRIPT_MAP = {
 def get_available_scripts(language):
     scripts = {
         'vi': [
-            {"name": "1. Swap token ngẫu nhiên trên Hub OG │ 0G LABs Testnet", "value": "swaptoken"},
-            {"name": "2. Deploy Storagescan File │ 0G LABs Testnet", "value": "storagescan"},
-            {"name": "3. Mint ConftApp Miner's Legacy (MINERS) │ 0G LABs Testnet", "value": "conftnft"},
-            {"name": "4. Mint Domain │ 0G LABs Testnet", "value": "domain"},
-            {"name": "5. Mint Aura - Panda 0G (PG) │ 0G LABs Testnet", "value": "mintaura"},
-            {"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G LABs Testnet", "value": "mintnerzo"},
-            {"name": "7. Gửi TX ngẫu nhiên hoặc File (address.txt) │ 0G LABs Testnet", "value": "sendtx"},
-            {"name": "8. Deploy Token smart-contract │ 0G LABs Testnet", "value": "deploytoken"},
-            {"name": "9. Gửi Token ERC20 ngẫu nhiên hoặc File (addressERC20.txt) │ 0G LABs Testnet", "value": "sendtoken"},
+            {"name": "1. Faucet tokens [USDT, ETH, BTC] -> zer0 ØG │ 0G Galileo Testnet", "value": "faucettokens"},
+            {"name": "2. Swap token ngẫu nhiên trên zer0 ØG │ 0G Galileo Testnet", "value": "swaptoken"},
+            {"name": "3. Deploy Storagescan File │ 0G Galileo Testnet", "value": "storagescan"},
+            {"name": "4. Mint ConftApp Galileo Drift (GD) │ 0G Galileo Testnet", "value": "conftnft"},
+            {"name": "5. Mint Domain │ 0G Galileo Testnet", "value": "domain"},
+            
+            #{"name": "5. Mint Aura - Panda 0G (PG) │ 0G Galileo Testnet", "value": "mintaura"},
+            #{"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G Galileo Testnet", "value": "mintnerzo"},
+            
+            {"name": "6. Gửi TX ngẫu nhiên hoặc File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
+            {"name": "7. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
+            {"name": "8. Gửi Token ERC20 ngẫu nhiên hoặc File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
+            {"name": "9. Deploy NFT - Quản lý bộ sưu tập NFT [ Tạo | Mint | Đốt ] | 0G Galileo Testnet", "value": "nftcollection"},
             {"name": "10. Thoát", "value": "exit"},
         ],
         'en': [
-            {"name": "1. Swap tokens randomly on Hub OG │ 0G LABs Testnet", "value": "swaptoken"},
-            {"name": "2. Deploy Storagescan File │ 0G LABs Testnet", "value": "storagescan"},
-            {"name": "3. Mint ConftApp Miner's Legacy (MINERS) │ 0G LABs Testnet", "value": "conftnft"},
-            {"name": "4. Mint Domain │ 0G LABs Testnet", "value": "domain"},
-            {"name": "5. Mint Aura - Panda 0G (PG) │ 0G LABs Testnet", "value": "mintaura"},
-            {"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G LABs Testnet", "value": "mintnerzo"},
-            {"name": "7. Send Random TX or File (address.txt) │ 0G LABs Testnet", "value": "sendtx"},
-            {"name": "8. Deploy Token smart-contract │ 0G LABs Testnet", "value": "deploytoken"},
-            {"name": "9. Send ERC20 Token Random or File (addressERC20.txt) │ 0G LABs Testnet", "value": "sendtoken"},
+            {"name": "1. Faucet tokens [USDT, ETH, BTC] -> zer0 ØG │ 0G Galileo Testnet", "value": "faucettokens"},
+            {"name": "2. Swap tokens randomly on zer0 ØG │ 0G Galileo Testnet", "value": "swaptoken"},
+            {"name": "3. Deploy Storagescan File │ 0G Galileo Testnet", "value": "storagescan"},
+            {"name": "4. Mint ConftApp Galileo Drift (GD) │ 0G Galileo Testnet", "value": "conftnft"},
+            {"name": "5. Mint Domain │ 0G Galileo Testnet", "value": "domain"},
+            
+            #{"name": "5. Mint Aura - Panda 0G (PG) │ 0G Galileo Testnet", "value": "mintaura"},
+            #{"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G Galileo Testnet", "value": "mintnerzo"},
+            
+            {"name": "6. Send Random TX or File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
+            {"name": "7. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
+            {"name": "8. Send ERC20 Token Random or File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
+            {"name": "9. Deploy NFT - Manage NFT Collection [ Create | Mint | Burn ] | 0G Galileo Testnet", "value": "nftcollection"},
             {"name": "10. Exit", "value": "exit"},
         ]
     }

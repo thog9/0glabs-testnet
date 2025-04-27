@@ -4,4 +4,5 @@ colorama
 py-solc-x
 eth-account
 aiohttp
-loguru   
+loguru
+aiohttp_socks   

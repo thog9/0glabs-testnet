@@ -91,6 +91,22 @@ async def run_nftcollection(language: str):
     from scripts.nftcollection import run_nftcollection as nftcollection_run
     await nftcollection_run(language)
 
+async def run_easynode(language: str):
+    from scripts.easynode import run_easynode as easynode_run
+    await easynode_run(language)
+
+async def run_mintair(language: str):
+    from scripts.mintair import run_mintair as mintair_run
+    await mintair_run(language)
+
+async def run_mintmorkie(language: str):
+    from scripts.mintmorkie import run_mintmorkie as mintmorkie_run
+    await mintmorkie_run(language)
+
+async def run_mintomnihub(language: str):
+    from scripts.mintomnihub import run_mintomnihub as mintomnihub_run
+    await mintomnihub_run(language)
+
 async def cmd_exit(language: str):
     messages = {"vi": "Đang thoát...", "en": "Exiting..."}
     print_border(messages[language], Fore.GREEN)
@@ -109,6 +125,10 @@ SCRIPT_MAP = {
     "deploytoken": run_deploytoken,
     "sendtoken": run_sendtoken,
     "nftcollection": run_nftcollection,
+    "easynode": run_easynode,
+    "mintair": run_mintair,
+    "mintmorkie": run_mintmorkie,
+    "mintomnihub": run_mintomnihub,
     "exit": cmd_exit
 }
 
@@ -122,14 +142,18 @@ def get_available_scripts(language):
             {"name": "4. Mint ConftApp Galileo Drift (GD) │ 0G Galileo Testnet", "value": "conftnft"},
             {"name": "5. Mint Domain │ 0G Galileo Testnet", "value": "domain"},
             
-            #{"name": "5. Mint Aura - Panda 0G (PG) │ 0G Galileo Testnet", "value": "mintaura"},
+            {"name": "6. Mint Aura - Pandriel 🐼 │ 0G Galileo Testnet", "value": "mintaura"},
             #{"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G Galileo Testnet", "value": "mintnerzo"},
-            
-            {"name": "6. Gửi TX ngẫu nhiên hoặc File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
-            {"name": "7. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
-            {"name": "8. Gửi Token ERC20 ngẫu nhiên hoặc File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
-            {"name": "9. Deploy NFT - Quản lý bộ sưu tập NFT [ Tạo | Mint | Đốt ] | 0G Galileo Testnet", "value": "nftcollection"},
-            {"name": "10. Thoát", "value": "exit"},
+            {"name": "7. Deploy Smart Contract EasyNode | 0G Galileo Testnet", "value": "easynode"},
+            {"name": "8. Deploy Smart Contract Mintair | 0G Galileo Testnet", "value": "mintair"},
+            {"name": "9. Mint NFT Morkie [ OG Panda NFT ] | 0G Galileo Testnet", "value": "mintmorkie"},
+            {"name": "10. Mint OmniHub NFT Studio | 0G Galileo Testnet", "value": "mintomnihub"},
+
+            {"name": "11. Gửi TX ngẫu nhiên hoặc File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
+            {"name": "12. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
+            {"name": "13. Gửi Token ERC20 ngẫu nhiên hoặc File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
+            {"name": "14. Deploy NFT - Quản lý bộ sưu tập NFT [ Tạo | Mint | Đốt ] | 0G Galileo Testnet", "value": "nftcollection"},
+            {"name": "15. Thoát", "value": "exit"},
         ],
         'en': [
             {"name": "1. Faucet tokens [USDT, ETH, BTC] -> zer0 ØG │ 0G Galileo Testnet", "value": "faucettokens"},
@@ -138,14 +162,18 @@ def get_available_scripts(language):
             {"name": "4. Mint ConftApp Galileo Drift (GD) │ 0G Galileo Testnet", "value": "conftnft"},
             {"name": "5. Mint Domain │ 0G Galileo Testnet", "value": "domain"},
             
-            #{"name": "5. Mint Aura - Panda 0G (PG) │ 0G Galileo Testnet", "value": "mintaura"},
+            {"name": "6. Mint Aura - Pandriel 🐼 │ 0G Galileo Testnet", "value": "mintaura"},
             #{"name": "6. Mint Nerzo - 0G OG (NERZO-0GOG) │ 0G Galileo Testnet", "value": "mintnerzo"},
+            {"name": "7. Deploy Smart Contract EasyNode | 0G Galileo Testnet", "value": "easynode"},
+            {"name": "8. Deploy Smart Contract Mintair | 0G Galileo Testnet", "value": "mintair"},
+            {"name": "9. Mint NFT Morkie [ OG Panda NFT ] | 0G Galileo Testnet", "value": "mintmorkie"},
+            {"name": "10. Mint OmniHub NFT Studio | 0G Galileo Testnet", "value": "mintomnihub"},
             
-            {"name": "6. Send Random TX or File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
-            {"name": "7. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
-            {"name": "8. Send ERC20 Token Random or File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
-            {"name": "9. Deploy NFT - Manage NFT Collection [ Create | Mint | Burn ] | 0G Galileo Testnet", "value": "nftcollection"},
-            {"name": "10. Exit", "value": "exit"},
+            {"name": "11. Send Random TX or File (address.txt) │ 0G Galileo Testnet", "value": "sendtx"},
+            {"name": "12. Deploy Token smart-contract │ 0G Galileo Testnet", "value": "deploytoken"},
+            {"name": "13. Send ERC20 Token Random or File (addressERC20.txt) │ 0G Galileo Testnet", "value": "sendtoken"},
+            {"name": "14. Deploy NFT - Manage NFT Collection [ Create | Mint | Burn ] | 0G Galileo Testnet", "value": "nftcollection"},
+            {"name": "15. Exit", "value": "exit"},
         ]
     }
     return scripts[language]
